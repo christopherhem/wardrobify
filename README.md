@@ -14,6 +14,7 @@ microservice, here.
 
 - Integrating shoe models for project
 - Making dev branch for shoe stuff
+- Adding Restful API for shoes here
 
 ## Hats microservice
 
