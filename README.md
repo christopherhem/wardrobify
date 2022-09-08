@@ -19,4 +19,8 @@ microservice, here.
 Explain your models and integration with the wardrobe
 microservice, here.
 
+Hats model will contain fields for the following: fabric, style-name, color, picture, and location
+
+Data will be retrieved from RESTful APIs which will then be implemented into the Hat's microservice in order to return and render through a react application.  
+
 
