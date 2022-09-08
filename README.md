@@ -12,6 +12,8 @@ Team:
 Explain your models and integration with the wardrobe
 microservice, here.
 
+- Integrating shoe models for project
+
 ## Hats microservice
 
 Explain your models and integration with the wardrobe
