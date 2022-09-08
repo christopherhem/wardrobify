@@ -13,6 +13,7 @@ Explain your models and integration with the wardrobe
 microservice, here.
 
 - Integrating shoe models for project
+- Making dev branch for shoe stuff
 
 ## Hats microservice
 
