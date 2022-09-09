@@ -15,7 +15,7 @@ function App(props) {
         <Routes>
           <Route path="/" element={<MainPage />} />
             <Route path="hats" element={<HatsList hats={props.hats}/>} />
-            <Route path="new" element={<NewHatForm />} />
+            <Route path="hats/new" element={<NewHatForm />} />
         </Routes>
       </div>
     </BrowserRouter>

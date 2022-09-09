@@ -16,6 +16,8 @@ class LocationVOEncoder(ModelEncoder):
         "id",
         "closet_name",
         "import_href",
+        "section_number",
+        "shelf_number",
     ]
 
 class HatsListEncoder(ModelEncoder):

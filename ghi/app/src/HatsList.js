@@ -1,59 +1,108 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function HatsList(props) {
-    console.log(props)
-    const [presentHat, setHat] = useState(props);
-    const [presentLocation, setLocation] = useState();
+function HatColumn(props) {
 
-    const HatDetail = async () => {
-        const url = `http://localhost:8090/api/hats/${presentHat.id}/`;
-        const response = await fetch(url);
+return (
+  <div className="col">
+    {props.list.map(data => {
+      const hat = data
+      console.log(hat)
+      return (
+        <div key={hat.id} className="card mb-3 shadow">
+          <img src={hat.picture_url} className="card-img-top" />
+          <div key={hat} className="card-body">
+            <h5 className="card-title">{hat.style_name}</h5>
+            <h6 className="card-subtitle mb-2 text-muted">Closet: {hat.location.closet_name}</h6>
+            <h6 className="card-subtitle mb-2 text-muted">Shelf: {hat.location.shelf_number}</h6>
+            <h6 className="card-subtitle mb-2 text-muted">Section: {hat.location.section_number}</h6>
+          </div>
+          <button onClick={() => HatDelete(hat)}>Delete</button>
+        </div>
+      );
+    })}
+  </div>
+);
+}
 
-        if (response.ok) {
-            const data = await response.json();
-            setLocation(data.location.closet_name);
+async function HatDelete(hat){
+  const HatDeleteUrl = `http://localhost:8090/api/hats/${hat.id}` 
+  const fetchConfig = {
+    method: "delete"
+  }
+    const response = await fetch(HatDeleteUrl, fetchConfig);
+    if (response.ok) {
+        window.location.reload()
+    
+    }
+  }
+
+class HatsList extends React.Component {
+constructor(props) {
+  super(props);
+  this.state = {
+      hatColumns: [[], [], []],
+  };
+}
+
+  async componentDidMount() {
+    const url = 'http://localhost:8090/api/hats/';
+
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+      const data = await response.json();
+
+      const requests = [];
+      for (let hat of data.hats) {
+        const detailUrl = `http://localhost:8090/api/hats/${hat.id}`;
+        requests.push(fetch(detailUrl));
+      }
+
+      const responses = await Promise.all(requests);
+
+      const hatColumns = [[], [], []];
+
+      let i = 0;
+      for (const hatResponse of responses) {
+        if (hatResponse.ok) {
+          const details = await hatResponse.json();
+          hatColumns[i].push(details);
+          i = i + 1;
+          if (i > 2) {
+            i = 0;
+          }
+        } else {
+          console.error(hatResponse);
         }
-    }
+      }
 
-    const HatDelete = async () => {
-        fetch(`http://localhost:8090/api/hats/${presentHat.id}/`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        window.location.reload();
+      this.setState({hatColumns: hatColumns});
     }
+  } catch (e) {
+    console.error(e);
+  }
+}
 
-    const handleClick = async (hat) => {
-        console.log("present hat will be...", hat);
-        setHat(hat);
-        HatDetail();
-    }
-    return (
-        <>
-        <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Fabric</th>
-                    <th>Style Name</th>
-                    <th>Color</th>
-                    <th>Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {props.hats.map(hat => {
-                  return (
-                    <tr key={hat.id}>
-                      <td>{ hat.fabric }</td>
-                      <td>{ hat.style_name }</td>
-                      <td>{ hat.color }</td>
+render() {
+  return (
+    <>
+      <div className="container">
+        <h2>List of Hats</h2>
+        <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+              <Link to="/hats/new" className="btn btn-primary btn-lg px-4 gap-3">Click Here to Create a Hat!</Link></div>
+        <hr></hr>
+        <div className="row">
+          {this.state.hatColumns.map((hatList, index) => {
+            return (
+              <HatColumn key={index} list={hatList} />
+            );
+          })}
+          </div>
+        </div>
+    </>
+  );
+}
+}
 
-                    </tr>
-                  )
-                })}
-                </tbody>
-              </table>  
-              </>
-        )
-    }
+export default HatsList;
