@@ -1,4 +1,6 @@
 import React from 'react';
+// import { useHistory } from "react-router-dom";
+// import Api from '../api';
 
 class NewHatForm extends React.Component {
     constructor(props) {
