@@ -12,11 +12,11 @@ root.render(
 
 async function loadInventory() {
   const hatsResponse = await fetch('http://localhost:8090/api/hats/');
-  //const shoesResponse = await fetch('http://localhost:8080/api/shoes/');
+  const shoesResponse = await fetch('http://localhost:8080/api/shoes/');
 
   if (hatsResponse.ok) {
     const hatData = await hatsResponse.json();
-    //const shoeData = await shoesResponse.json();
+    const shoeData = await shoesResponse.json();
     root.render(
       <React.StrictMode>
         <App hats={hatData.hats}/>
@@ -24,7 +24,7 @@ async function loadInventory() {
     );
   } else {
     console.error(hatsResponse);
-    //console.error(shoesResponse);
+    console.error(shoesResponse);
   }
 }
 loadInventory();
