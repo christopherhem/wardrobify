@@ -14,9 +14,8 @@ from hats_rest.models import LocationVO
 
 def poll():
     while True:
-        print('Hats poller polling for data!!!!!!!!!!!!!!!!!!!!!!!')
+        print('Hats poller polling for data!!!!!!')
         try:
-            print("ImTRTYING HERE")
             url = "http://wardrobe-api:8000/api/locations/"
             response = requests.get(url)
             content = json.loads(response.content)
