@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['wardrobe_api', 'localhost',]
 # Application definition
 
 INSTALLED_APPS = [
-    "shoes_rest.ShoesApiConfig",
+    "shoes_rest.apps.ShoesApiConfig",
     "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
