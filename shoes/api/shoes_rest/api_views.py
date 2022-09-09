@@ -1,7 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
-from .acls import get_photo
 
 from common.json import ModelEncoder
 from .models import Shoe, BinVO
