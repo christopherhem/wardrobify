@@ -18,11 +18,8 @@ function App(props) {
           <Route path="/" element={<MainPage />} />
             <Route path="hats" element={<HatsList hats={props.hats}/>} />
             <Route path="hats/new" element={<NewHatForm />} />
-<<<<<<< HEAD
             <Route path="shoes" element={<ShoeList shoes={props.shoes}/>} />
             <Route path="shoes/new" element={<ShoeForm />} />
-=======
->>>>>>> main
         </Routes>
       </div>
     </BrowserRouter>
@@ -30,4 +27,3 @@ function App(props) {
 }
 
 export default App;
-
