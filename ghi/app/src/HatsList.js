@@ -1,14 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function HatColumn(props) {
+
 return (
   <div className="col">
     {props.list.map(data => {
       const hat = data
+      console.log(hat)
       return (
         <div key={hat.id} className="card mb-3 shadow">
           <img src={hat.picture_url} className="card-img-top" />
-          <div key={hat.id} className="card-body">
+          <div key={hat} className="card-body">
             <h5 className="card-title">{hat.style_name}</h5>
             <h6 className="card-subtitle mb-2 text-muted">Closet: {hat.location.closet_name}</h6>
             <h6 className="card-subtitle mb-2 text-muted">Shelf: {hat.location.shelf_number}</h6>
@@ -29,7 +32,8 @@ async function HatDelete(hat){
   }
     const response = await fetch(HatDeleteUrl, fetchConfig);
     if (response.ok) {
-      
+        window.location.reload()
+    
     }
   }
 
@@ -85,14 +89,17 @@ render() {
     <>
       <div className="container">
         <h2>List of Hats</h2>
+        <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+              <Link to="/hats/new" className="btn btn-primary btn-lg px-4 gap-3">Click Here to Create a Hat!</Link></div>
+        <hr></hr>
         <div className="row">
           {this.state.hatColumns.map((hatList, index) => {
             return (
               <HatColumn key={index} list={hatList} />
             );
           })}
+          </div>
         </div>
-      </div>
     </>
   );
 }
