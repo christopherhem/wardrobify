@@ -47,6 +47,8 @@ def api_list_shoes(request, bin_vo_id=None):
             shoes = Shoe.objects.filter(bin=bin_vo_id)
         else:
             shoes = Shoe.objects.all()
+            print("SHOES SHOULD SHOW HERE")
+            print(shoes)
         return JsonResponse(
         {'shoes': shoes},
         encoder=ShoeListEncoder
