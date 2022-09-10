@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useHistory } from "react-router-dom";
+import { History } from "history";
 // import Api from '../api';
 
 class NewHatForm extends React.Component {
@@ -48,6 +48,8 @@ class NewHatForm extends React.Component {
                 location: '',
             };
             this.setState(cleared);
+            window.history.back();
+
         }
 
     }
