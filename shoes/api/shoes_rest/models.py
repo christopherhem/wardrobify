@@ -9,7 +9,7 @@ class BinVO(models.Model):
     import_href = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
-        return f"{self.closet_name} - {self.bin_number}/{self.bin_size}"
+        return str(self.bin_number)
 
 class Shoe(models.Model):
     manufacturer = models.CharField(max_length=200)
@@ -18,9 +18,9 @@ class Shoe(models.Model):
     picture_url = models.URLField(null=True)
     bin = models.ForeignKey(
         BinVO,
-        related_name='bin',
+        related_name='shoes',
         on_delete=models.PROTECT,
     )
 
     def __str__(self):
-        return f"{self.manufacturer} {self.name}"
+        return self.name 

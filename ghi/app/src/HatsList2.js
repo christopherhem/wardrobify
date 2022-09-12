@@ -2,27 +2,27 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import loadInventory from ".";
 
-
-function ShoeList(props) {
+function HatList2(props) {
     useEffect(() => {
-      loadInventory(ShoeList);
+      loadInventory(HatList2);
     }, [])
-    const [currentShoe, setCurrentShoe] = useState([props.shoes]);
-    const [currentShoeBin, setCurrentShoeBin] = useState();
+    const [currentHat, setCurrentHat] = useState([props.hats]);
+    console.log("HEYYYYYYYYYYY")
+    console.log(props.hats);
+    const [currentHatLocation, setCurrentHatLocation] = useState();
 
-    const getShoeDetail = async() => {
-        const url = `http://localhost:8080/api/shoes/${currentShoe.id}/`;
+    const getHatDetail = async(hat) => {
+        const url = `http://localhost:8090/api/hats/${hat.id}/`;
         const response = await fetch(url);
-        console.log(url)
-    
+        
         if (response.ok) {
           const data = await response.json();
-          setCurrentShoeBin(data.bin.closet_name);
+          setCurrentHatLocation(data.location.closet_name);
         }
       }
 
-    const deleteShoe = async (shoe) => {
-      const response = await fetch(`http://localhost:8080/api/shoes/${shoe}/`, {
+    const deleteHat = async (hat) => {
+      const response = await fetch(`http://localhost:8090/api/hats/${hat}/`, {
           method: 'DELETE',
           headers: {
               'Content-Type': 'application/json'
@@ -34,48 +34,43 @@ function ShoeList(props) {
       }
     }
 
-    const handleClick = async (shoe) => {
-        setCurrentShoe(shoe);
+    const handleClick = async (hat) => {
+        setCurrentHat(hat);
     };
     
     return (
         <>
         <div className="container"></div>
         <hr></hr>
-        <h2>List of Shoes</h2>
+        <h2>List of Hats</h2>
         <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-              <Link to="/shoes/new" className="btn btn-primary btn-lg px-4 gap-3">Click Here to Create a Shoe!</Link></div>
+              <Link to="/hats/new" className="btn btn-primary btn-lg px-4 gap-3">Click Here to Create a Hat!</Link></div>
         <hr></hr>
         <table className="table table-striped">
         
         <thead>
           <tr>
-            <th>Manufacturer</th>
+            <th>Closet</th>
             <th>Name</th>
             <th>Color</th>
-            <th>Bin</th>
+            <th>Location</th>
             <th>Remove</th>
           </tr>
         </thead>
         <tbody>
-            {props.shoes.map((shoe) => {
-              console.log("HELLO")
-              console.log(shoe)
+            {props.hats.map((hat) => {
             return (
                 <tr
-                key={shoe.id}
-                onClick={() => handleClick(shoe)}
+                key={hat.id}
+                onClick={() => handleClick(hat.id)}
                 >
-                    <td><img src={shoe.picture_url} data-bs-toggle="modal"
+                    <td><img src={hat.picture_url} data-bs-toggle="modal"
                 data-bs-target='#exampleModal' className="img-thumbnail" /></td>
-                    <td>{shoe.manufacturer}</td>
-                    <td>{shoe.color}</td>
-                    <td>{shoe.bin}</td>
-
-
-                  
+                    <td>{hat.style_name}</td>
+                    <td>{hat.color}</td>
+                    <td>{hat.location.closet_name}</td>
                     <td>
-                        <button onClick={() => deleteShoe(shoe.id)} type='button'>
+                        <button onClick={() => deleteHat(hat.id)} type='button'>
                             Remove
                         </button>
                     </td>
@@ -96,22 +91,22 @@ function ShoeList(props) {
             ></button>
                 </div>
                 <div className="modal-body">
-                    <img src={currentShoe.picture_url} className="rounded mx-auto d-block img-fluid"/>
+                    <img src={currentHat.picture_url} className="rounded mx-auto d-block img-fluid"/>
                     <table className="table table-striped">
                     <thead>
                         <tr>
-                        <th>Manufacturer</th>
+                        <th>Style Name</th>
                         <th>Name</th>
                         <th>Color</th>
-                        <th>Bin</th>
+                        <th>Location</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        <td>{currentShoe.manufacturer}</td>
-                        <td>{currentShoe.name}</td>
-                        <td>{currentShoe.color}</td>
-                        <td>{currentShoe.bin}</td>
+                        <td>{currentHat.manufacturer}</td>
+                        <td>{currentHat.name}</td>
+                        <td>{currentHat.color}</td>
+                        <td>{currentHat.location}</td>
                         </tr>
                     </tbody>
                     </table>
@@ -125,4 +120,4 @@ function ShoeList(props) {
       </>
     )
 };
-export default ShoeList;
+export default HatList2;

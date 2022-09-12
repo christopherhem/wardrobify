@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import loadInventory from '.';  
 
 function HatColumn(props) {
+  console.log(props)
 
 return (
   <div className="col">
@@ -88,6 +90,7 @@ render() {
   return (
     <>
       <div className="container">
+      <hr></hr>
         <h2>List of Hats</h2>
         <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
               <Link to="/hats/new" className="btn btn-primary btn-lg px-4 gap-3">Click Here to Create a Hat!</Link></div>

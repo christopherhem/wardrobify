@@ -8,8 +8,11 @@ import json
 class BinDetailEncoder(ModelEncoder):
     model = BinVO
     properties = [
+        'id',
         'closet_name',
         'import_href',
+        'bin_size',
+        'bin_number',
     ]
 
 class ShoeListEncoder(ModelEncoder):
@@ -20,10 +23,11 @@ class ShoeListEncoder(ModelEncoder):
         'picture_url',
         'color',
         'manufacturer',
+        
     ]
-
-    def get_extra_data(self, o):
-        return {"bin": o.bin.closet_name}
+    encoders = {
+        'bin': BinDetailEncoder(),
+    }
 
 class ShoeDetailEncoder(ModelEncoder):
     model = Shoe
@@ -32,6 +36,7 @@ class ShoeDetailEncoder(ModelEncoder):
         'color',
         'picture_url',
         'manufacturer',
+        'id',
         'bin',
     ]
     encoders = {
@@ -39,22 +44,21 @@ class ShoeDetailEncoder(ModelEncoder):
     }
 
 
-
 @require_http_methods(['GET', 'POST'])
 def api_list_shoes(request, bin_vo_id=None):
     if request.method == "GET":
-        if bin_vo_id is not None:
+        if (bin_vo_id is not None):
             shoes = Shoe.objects.filter(bin=bin_vo_id)
+
         else:
             shoes = Shoe.objects.all()
-            print("SHOES SHOULD SHOW HERE")
-            print(shoes)
         return JsonResponse(
-        {'shoes': shoes},
-        encoder=ShoeListEncoder
+            {'shoes': shoes},
+            encoder=ShoeListEncoder
         )
     else:
         content = json.loads(request.body)
+
         try:
             bin_href = content['bin']
             bin = BinVO.objects.get(import_href=bin_href)

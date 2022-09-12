@@ -28,7 +28,11 @@ class HatsListEncoder(ModelEncoder):
         "style_name",
         "color",
         "picture_url",
+        "location",
     ]
+    encoders = {
+        "location": LocationVOEncoder(),
+    }
 
 class HatsDetailEncoder(ModelEncoder):
     model = Hat
@@ -62,11 +66,8 @@ def api_list_hats(request, location_vo_id=None):
 
         try:
             location_id = content["location"]
-            print("HEREEEEE")
-            print(location_id)
             location = LocationVO.objects.get(import_href=location_id)
-            print("OVERHERE!!!!")
-            print(location)
+        
             content["location"] = location
         except LocationVO.DoesNotExist:
             return JsonResponse(
@@ -100,6 +101,8 @@ def api_show_hat(request, pk):
                     location = LocationVO.objects.get(
                         id=content["location"]
                     )
+                    print("HELLLOOOOOOOOOO LOCATION!")
+                    print(location)
                     content["location"] = location
             except LocationVO.DoesNotExist:
                 return JsonResponse(
@@ -107,7 +110,7 @@ def api_show_hat(request, pk):
                     status=400
                 )
             Hat.objects.filter(id=pk).update(**content)
-            attendee = Hat.objects.get(id=pk)
+            hat = Hat.objects.get(id=pk)
             return JsonResponse(
                 hat, encoder=HatsDetailEncoder,
                 safe=False
