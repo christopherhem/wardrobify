@@ -13,7 +13,6 @@ function ShoeList(props) {
     const getShoeDetail = async() => {
         const url = `http://localhost:8080/api/shoes/${currentShoe.id}/`;
         const response = await fetch(url);
-        console.log(url)
     
         if (response.ok) {
           const data = await response.json();
@@ -59,8 +58,6 @@ function ShoeList(props) {
         </thead>
         <tbody>
             {props.shoes.map((shoe) => {
-              console.log("HELLO")
-              console.log(shoe)
             return (
                 <tr
                 key={shoe.id}

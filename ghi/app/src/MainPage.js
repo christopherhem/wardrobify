@@ -1,13 +1,11 @@
+import wardrobify from './wardrobify.jpeg';
+
 function MainPage() {
   return (
     <div className="px-4 py-5 my-5 text-center">
-      <h1 className="display-5 fw-bold">WARDROBIFY!</h1>
-      <div className="col-lg-6 mx-auto">
-        <p className="lead mb-4">
-          Need to keep track of your shoes and hats? We have
-          the solution for you!
-        </p>
-      </div>
+      <img src={wardrobify} width='1250px' height='800px' />
+      <h1><strong>Need to keep track of your shoes and hats?</strong></h1>
+      <h1><strong>We have the solution for you!</strong></h1>
     </div>
   );
 }

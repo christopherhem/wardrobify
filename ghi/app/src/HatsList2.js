@@ -7,8 +7,6 @@ function HatList2(props) {
       loadInventory(HatList2);
     }, [])
     const [currentHat, setCurrentHat] = useState([props.hats]);
-    console.log("HEYYYYYYYYYYY")
-    console.log(props.hats);
     const [currentHatLocation, setCurrentHatLocation] = useState();
 
     const getHatDetail = async(hat) => {

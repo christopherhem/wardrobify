@@ -95,7 +95,6 @@ class NewHatForm extends React.Component {
   
         if (response.ok) {
             const data = await response.json();
-            console.log("location data")
             this.setState({locations: data.locations});
         }
         
